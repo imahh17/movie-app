@@ -1,14 +1,16 @@
 const APIKEY = 'd1cf03e9c242181f7d663f4b66c949be';
-const APIURL = 'https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&api_key='+APIKEY+'&language=es&page=1';
-const IMGPATH = 'https://image.tmdb.org/t/p/w1280/';  //https://www.themoviedb.org/t/p/original/
-
+const APIURL = 'https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&api_key='+APIKEY+'&language=es';
+const IMGPATH = 'https://image.tmdb.org/t/p/w1280/'; 
+const PAGPATH = '&page='
 const SEARCHAPI = 'https://api.themoviedb.org/3/search/movie?&api_key='+APIKEY+'&query=';
 
 const main = document.querySelector('main');
 const form = document.querySelector('form');
 const search = document.querySelector('.search');
+const botonSec = document.getElementById('botonera');
+const botones = document.querySelectorAll('.boton');
 
-getMovies(APIURL);
+getMovies(APIURL+PAGPATH+"1");
 
 async function getMovies(url){
     const resp = await fetch(url);
@@ -17,6 +19,8 @@ async function getMovies(url){
     console.log(respData);
 
     showMovies(respData.results);
+
+    getBotones(respData);
 
 }
 
@@ -64,6 +68,43 @@ function showMovies(movies){
     });
 }
 
+function getBotones(data){
+    console.log(data.page); //Pagina actual
+    console.log(data.total_pages); //Total de paginas
+    botonSec.innerHTML="";
+
+    for(let i=1; i<=5; i++){
+
+        //Antes creé button en vez de div
+        const botonEl = document.createElement('div');
+        botonEl.classList.add("botonCont");
+
+        botonEl.innerHTML = `
+            <button onclick="botonClick(this)" class="boton">`+i+`</button>
+        `;
+
+        botonSec.appendChild(botonEl);
+    }
+
+    botonSec.append(". . .");
+
+    const botonEl = document.createElement('div');
+    botonEl.classList.add("botonCont");
+
+    botonEl.innerHTML = `
+        <button onclick="botonClick(this)" class="boton">500</button>
+    `;
+
+    botonSec.appendChild(botonEl);
+}
+
+
+function botonClick(e){
+    e.classList.add("botSelected");
+    getMovies(APIURL+PAGPATH+e.innerText);
+    window.scrollTo(0, 0);
+}
+
 function getClassByRate(vote){
     if(vote >= 8){
         return 'green';
@@ -88,8 +129,7 @@ form.addEventListener('submit', (e) => {
 });
 
 document.getElementById('titulo').addEventListener('click', (e) => {
-    //Click en el titulo para volver a inicio
-    alert('h');
+    getMovies(APIURL+PAGPATH+"1");
 });
 
 

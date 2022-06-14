@@ -131,3 +131,33 @@ main{
     margin-top: 0;
 }
 
+.botonCont{
+    margin: 0.5rem;
+}
+
+#botonera{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 1.5rem;
+}
+
+.boton{
+    font-size: 1.5rem;
+    font-weight: bold;
+    padding: 3px 1rem;
+}
+
+.boton:hover{
+    background-color: #373b69;
+    color: white;
+    border-color: white;
+}
+
+.botSelected{
+    background-color: #373b69;
+    color: white;
+    border-color: white;
+}
+
