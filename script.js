@@ -20,9 +20,9 @@ async function getMovies(url){
 
     showMovies(respData.results);
 
-    getBotones(respData);
-
 }
+
+getBotones();
 
 function showMovies(movies){
     //Borra lo que hay en la sección main
@@ -68,9 +68,9 @@ function showMovies(movies){
     });
 }
 
-function getBotones(data){
-    console.log(data.page); //Pagina actual
-    console.log(data.total_pages); //Total de paginas
+function getBotones(){ //data como parametro si meto el callBack en getMovies como getBotones(respData) pero me reinicia botones y no lo uso
+    //console.log(data.page); //Pagina actual
+    //console.log(data.total_pages); //Total de paginas
     botonSec.innerHTML="";
 
     for(let i=1; i<=5; i++){
@@ -98,11 +98,18 @@ function getBotones(data){
     botonSec.appendChild(botonEl);
 }
 
+let botonAnterior = document.createElement('button');
 
 function botonClick(e){
-    e.classList.add("botSelected");
+    console.log(e);
+    if(botonAnterior != e){
+        botonAnterior.classList.remove("botSelected");
+    } 
     getMovies(APIURL+PAGPATH+e.innerText);
     window.scrollTo(0, 0);
+    e.classList.add("botSelected");
+    botonAnterior = e;
+
 }
 
 function getClassByRate(vote){
@@ -129,6 +136,7 @@ form.addEventListener('submit', (e) => {
 });
 
 document.getElementById('titulo').addEventListener('click', (e) => {
+    botonAnterior.classList.remove("botSelected");
     getMovies(APIURL+PAGPATH+"1");
 });
 
