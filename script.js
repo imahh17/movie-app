@@ -129,6 +129,8 @@ form.addEventListener('submit', (e) => {
 
     if(searchTerm){
 
+        document.getElementById('botonera').remove();
+
         getMovies(SEARCHAPI + searchTerm);
 
         search.value = '';
@@ -136,8 +138,7 @@ form.addEventListener('submit', (e) => {
 });
 
 document.getElementById('titulo').addEventListener('click', (e) => {
-    botonAnterior.classList.remove("botSelected");
-    getMovies(APIURL+PAGPATH+"1");
+    location.reload(); 
 });
 
 
